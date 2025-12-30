@@ -14,3 +14,6 @@ export const SupabaseUser = async () => {
   if (res.error) SupabaseAuthError(res.error);
   return res?.data?.session?.user;
 };
+
+// Alias for backward compatibility
+export const getUser = SupabaseUser;

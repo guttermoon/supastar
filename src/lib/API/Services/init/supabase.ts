@@ -12,3 +12,6 @@ export const SupabaseServerClient = () => {
   const cookieStore = cookies();
   return createServerActionClient<Database>({ cookies: () => cookieStore });
 };
+
+// Alias for backward compatibility
+export const createClient = SupabaseServerClient;

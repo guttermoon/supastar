@@ -58,7 +58,7 @@ export default function PhotoLibraryPage() {
 
       mutate('/api/photos');
       mutate('/api/photos?unassigned=true');
-      
+
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -94,12 +94,13 @@ export default function PhotoLibraryPage() {
 
   const handleBulkDelete = async () => {
     if (selectedPhotos.size === 0) return;
-    
+
     const confirmed = confirm(`Delete ${selectedPhotos.size} selected photos?`);
     if (!confirmed) return;
 
     try {
-      for (const photoId of selectedPhotos) {
+      const photoIds = Array.from(selectedPhotos);
+      for (const photoId of photoIds) {
         await fetch(`/api/photos/${photoId}`, {
           method: 'DELETE',
         });
@@ -154,12 +155,12 @@ export default function PhotoLibraryPage() {
           <Button onClick={() => setFilterUnassigned(!filterUnassigned)} variant="outline">
             {filterUnassigned ? 'Show All Photos' : 'Show Unassigned Only'}
           </Button>
-          
+
           <Button onClick={() => fileInputRef.current?.click()} disabled={uploading}>
             <Upload />
             {uploading ? 'Uploading...' : 'Upload Photos'}
           </Button>
-          
+
           <input
             ref={fileInputRef}
             type="file"
@@ -206,7 +207,7 @@ export default function PhotoLibraryPage() {
       ) : (
         <div>
           {photos.map((photo) => (
-            <Card 
+            <Card
               key={photo.id}
               onClick={() => togglePhotoSelection(photo.id)}
             >
@@ -215,7 +216,7 @@ export default function PhotoLibraryPage() {
                   src={photo.cropped_url || photo.original_url}
                   alt="Photo"
                 />
-                
+
                 {selectedPhotos.has(photo.id) && (
                   <div>
                     <div>✓</div>
@@ -240,7 +241,7 @@ export default function PhotoLibraryPage() {
                 >
                   Preview
                 </Button>
-                
+
                 <Button
                   size="sm"
                   variant="outline"
