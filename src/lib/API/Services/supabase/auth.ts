@@ -15,11 +15,17 @@ export const SupabaseSignUp = async (email: string, password: string) => {
   });
 
   if (!res.error) {
-    redirect(config.redirects.toDashboard);
+    if (res.data.session) {
+      redirect(config.redirects.toDashboard);
+    } else {
+      // If no session, it means email confirmation is required
+      redirect(config.redirects.authConfirm);
+    }
   }
 
   return res;
 };
+
 
 
 
