@@ -21,7 +21,9 @@ import {
   Twitter,
   Github,
   Linkedin,
-  Menu
+  Menu,
+  Layout,
+  Image
 } from 'lucide-react';
 
 const Google = ({ ...props }) => (
@@ -54,7 +56,9 @@ export const Icons = {
   CheckCircle2,
   Sun,
   Moon,
-  Menu
+  Menu,
+  Layout,
+  Image
 };
 
 export const SocialIcons = {
