@@ -54,12 +54,11 @@ export default function AuthForm() {
 
       return;
     }
-
-    router.push(config.redirects.callback);
   };
 
+
   const handleGoogleSignIn = async () => {
-    const { error } = await SupabaseSignInWithGoogle();
+    const { data, error } = await SupabaseSignInWithGoogle();
 
     if (error) {
       setError('email', {
@@ -70,8 +69,11 @@ export default function AuthForm() {
       return;
     }
 
-    router.push(config.redirects.callback);
+    if (data?.url) {
+      window.location.href = data.url;
+    }
   };
+
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -108,7 +110,7 @@ export default function AuthForm() {
                     <FormLabel>Password</FormLabel>
                     <FormControl>
                       <div className="relative">
-                        <Input 
+                        <Input
                           className="bg-background-light dark:bg-background-dark"
                           {...register('password')}
                           type={showPassword ? 'text' : 'password'}

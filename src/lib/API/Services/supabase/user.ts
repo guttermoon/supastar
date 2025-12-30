@@ -7,16 +7,18 @@ import {
 import { SupabaseAuthError } from '@/lib/utils/error';
 
 export const SupabaseSession = async () => {
-  const res = await componentClient().auth.getSession();
-  if (res.error) SupabaseAuthError(res.error);
+  const res = await componentClient().auth.getUser();
+  if (res.error) {
+    console.error('Supabase session error:', res.error);
+    return { data: { user: null }, error: res.error };
+  }
   return res;
 };
 
-
 export const SupabaseUser = async () => {
-  const res = await componentClient().auth.getSession();
-  if (res.error) SupabaseAuthError(res.error);
-  return res?.data?.session?.user;
+  const res = await componentClient().auth.getUser();
+  if (res.error) return null;
+  return res?.data?.user;
 };
 
 

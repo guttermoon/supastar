@@ -9,22 +9,24 @@ import { PostgrestSingleResponse } from '@supabase/supabase-js';
 import { LayoutProps } from '@/lib/types/types';
 
 export default async function DashboardLayout({ children }: LayoutProps) {
-  const { data: sessionData, error } = await SupabaseSession();
+  const { data: userData, error } = await SupabaseSession();
 
   // Auth Guard
-  if (error || !sessionData?.session) {
+  if (error || !userData?.user) {
     redirect(config.redirects.requireAuth);
   }
 
+  const user = userData.user;
   let profile: ProfileT | null = null;
-  if (sessionData?.session?.user) {
-    const res = await GetProfileByUserId(sessionData.session.user.id);
+  if (user) {
+    const res = await GetProfileByUserId(user.id);
     profile = res.data?.[0] || null;
   }
 
   const display_name = profile?.display_name;
-  const email = sessionData?.session?.user?.email;
-  const avatar_url = sessionData?.session?.user?.user_metadata?.avatar_url;
+  const email = user.email;
+  const avatar_url = user.user_metadata?.avatar_url;
+
 
 
   return (

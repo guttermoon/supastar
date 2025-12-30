@@ -10,10 +10,11 @@ export default async function AuthLayout({ children }: LayoutProps) {
   const { data } = await SupabaseSession();
 
   // Reverse Auth Guard
-  if (data?.session) {
+  if (data?.user) {
     redirect(config.redirects.toDashboard);
   }
-  
+
+
   return (
     <div>
       <header className="p-6 mb-4">

@@ -15,26 +15,29 @@ export const Header = async () => {
     <header>
       <div className="flex items-center justify-between p-6">
         <MainLogoText />
-        <Nav items={routes}/>
+        <Nav items={routes} />
         <div className="flex justify-center items-center">
           <ThemeDropDownMenu />
           <nav>
-            {data?.session && (
+            {data?.user && (
               <Link
-              href="/dashboard/main"
-              className={cn(buttonVariants({ variant: 'secondary', size: 'sm' }), 'px-6')}
+                href="/dashboard/main"
+                className={cn(buttonVariants({ variant: 'secondary', size: 'sm' }), 'px-6')}
               >
-              Dashboard
-              </Link>)}
-            
-            {!data?.session && (
+                Dashboard
+              </Link>
+            )}
+
+            {!data?.user && (
               <Link
-              href="/auth/login"
-              className={cn(buttonVariants({ variant: 'secondary', size: 'sm' }), 'px-6')}
+                href="/auth/login"
+                className={cn(buttonVariants({ variant: 'secondary', size: 'sm' }), 'px-6')}
               >
-              Login
-              </Link>)}
+                Login
+              </Link>
+            )}
           </nav>
+
         </div>
       </div>
     </header>
